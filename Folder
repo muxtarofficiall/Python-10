@@ -1,0 +1,34 @@
+import os
+import shutil
+
+# 1. "Example" adında bir kateqoriya yaradırıq.
+example_dir = "Example"
+if not os.path.exists(example_dir):
+    os.makedirs(example_dir)
+
+# 2. Bu directory-nin içərisində "subdirect" adında alt kateqoriya yaradırıq.
+subdirect_dir = os.path.join(example_dir, "subdirect")
+if not os.path.exists(subdirect_dir):
+    os.makedirs(subdirect_dir)
+
+# 3. "subdirect" alt kateqoriyasının içərisinə şəkil və text faylı əlavə edirik.
+# (şəkli və text faylını əl ilə mövcud qovluğa əlavə edin)
+# Əgər fayllar mövcud qovluqda "example_image.jpg" və "example_text.txt" adları ilə varsa, onları köçürək.
+
+# Faylların yollarını təyin edirik
+image_src = "example_image.jpg"
+text_src = "example_text.txt"
+
+# Faylların mövcudluğunu yoxlayırıq və "subdirect" alt kateqoriyasına köçürürük
+if os.path.exists(image_src) and os.path.exists(text_src):
+    shutil.move(image_src, os.path.join(subdirect_dir, image_src))
+    shutil.move(text_src, os.path.join(subdirect_dir, text_src))
+else:
+    print("Şəkil və ya text faylı mövcud qovluqda tapılmadı.")
+
+# 4. "subdirect" alt kateqoriyasının içərisində olub sonu .txt ilə bitən faylları "Example" directory-sinə göndəririk.
+for file_name in os.listdir(subdirect_dir):
+    if file_name.endswith('.txt'):
+        shutil.move(os.path.join(subdirect_dir, file_name), os.path.join(example_dir, file_name))
+
+print("Tapşırıqlar uğurla tamamlandı.")
